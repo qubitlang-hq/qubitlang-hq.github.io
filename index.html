@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QUBIT - The Coding Language</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Qubit is a math-first, educational and universal coding language.">
+  <meta name="theme-color" content="#0b0d10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-1: #0b0d10;  /* background base */
+      --bg-2: #0d1b2a;  /* gradient stop */
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.10);
+      --text: #e6eef6;
+      --muted: #a6b3c2;
+      --accent: #4cc9f0; /* cyan */
+      --accent-2: #b26ff6; /* violet */
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-1: #f7fafc;
+        --bg-2: #e8f0ff;
+        --card: rgba(0,0,0,.04);
+        --stroke: rgba(0,0,0,.10);
+        --text: #0e1116;
+        --muted: #4b5563;
+        --accent: #2563eb;
+        --accent-2: #7c3aed;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, color-mix(in oklab, var(--accent) 35%, transparent), transparent 60%),
+        radial-gradient(900px 450px at 110% 10%, color-mix(in oklab, var(--accent-2) 30%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      background-attachment: fixed;
+      display: grid;
+      place-items: center;
+      padding: 6vh 16px;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      body { animation: floatHue 16s ease-in-out infinite alternate; }
+      @keyframes floatHue {
+        0%   { filter: hue-rotate(0deg) saturate(105%); }
+        100% { filter: hue-rotate(-8deg) saturate(110%); }
+      }
+    }
+    .wrap {
+      width: 100%;
+      max-width: 880px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+      overflow: clip;
+    }
+    header {
+      padding: 28px 28px 0;
+    }
+    h1 {
+      margin: 0 0 .25rem;
+      font-size: clamp(28px, 4.8vw, 42px);
+      letter-spacing: .2px;
+      margin-top: 0.25rem;
+    }
+    .logo {
+      display: inline-block;
+      white-space: nowrap;
+      font-family: "Doto", system-ui, sans-serif;
+      font-weight: 500;
+      font-size: clamp(1.2rem, 2.5vw, 1.35rem);
+      letter-spacing: 0em;
+      opacity: 0.9;
+      color: #e8e8e8;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 8px color-mix(in oklab, var(--accent) 30%, transparent);
+    }
+    .logo .dot-i {
+      position: relative;
+      color: #9fd3ff;
+    }
+    .tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .925rem; color: var(--muted);
+      padding: 6px 10px; border: 1px dashed var(--stroke); border-radius: 999px;
+      margin-bottom: 0.6rem;
+    }
+    .content {
+      padding: 18px 28px 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+    .content p { margin: 0 0 .6rem; }
+    pre {
+      position: relative;
+      padding-left: 18px;
+    }
+    pre::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      bottom: 10px;
+      width: 3px;
+      background: #9fd3ff;
+      border-radius: 2px;
+    }
+    /* comment */
+    code .cm {
+      color: color-mix(in oklab, var(--muted) 85%, var(--accent) 15%);
+      font-style: italic;
+      opacity: 0.9;
+    }
+    /* keywords */
+    code .kw {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    /* operators */
+    code .op {
+      color: var(--accent-2);
+    }
+    /* strings */
+    code .str {
+      color: #9fd3ff;
+    }
+    /* numbers */
+    code .num {
+      color: #ffd166;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 18px 28px 28px;
+    }
+    @media (min-width: 720px) {
+      .grid { grid-template-columns: 1.1fr .9fr; }
+    }
+    .panel {
+      padding: 18px;
+      border: 1px solid var(--stroke);
+      border-radius: 12px;
+      background: color-mix(in oklab, var(--card) 80%, transparent);
+    }
+    .panel h2 {
+      margin: 0 0 .4rem;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+    .bullets { margin: .2rem 0 0; padding-left: 1rem; }
+    .bullets li { margin: .25rem 0; }
+    pre {
+      margin: .25rem 0 0;
+      padding: 14px;
+      border-radius: 10px;
+      background:
+        linear-gradient(120deg, color-mix(in oklab, var(--accent) 18%, transparent), transparent 35%),
+        linear-gradient(300deg, color-mix(in oklab, var(--accent-2) 12%, transparent), transparent 45%),
+        color-mix(in oklab, var(--card) 90%, transparent);
+      border: 1px solid var(--stroke);
+      overflow: auto;
+      font: 500 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      color: var(--text);
+    }
+    code { white-space: pre; }
+    .status {
+      margin-top: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .cta {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      padding: 0 28px 28px;
+    }
+    .btn {
+      appearance: none; border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 22%, transparent), transparent);
+      color: var(--text);
+      padding: 10px 14px; border-radius: 10px; cursor: pointer; text-decoration: none; font-weight: 600;
+      transition: transform .08s ease, border-color .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+    .btn:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--accent) 60%, var(--stroke)); }
+    .btn.secondary {
+      background: transparent;
+    }
+    .btn.disabled {
+      opacity: 0.5;                /* 반투명하게 만듦 */
+      pointer-events: none;       /* 클릭 이벤트를 완전히 차단 */
+      filter: grayscale(1);        /* 색상을 무채색으로 변경 (선택 사항) */
+      box-shadow: none;           /* 그림자 제거 */
+      transform: none !important; /* 호버 시 움직임 방지 */
+      border-style: dashed;       /* 준비 중임을 알리는 점선 스타일 (선택 사항) */
+    }
+    footer {
+      text-align: center; color: var(--muted); font-size: .9rem;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div class="logo">{QUB<span class="dot-i">i</span>T}</div>
+        <span class="tag">QubitLang • math‑first • education‑driven • design & active development</span>
+        <h1>{ QUBIT: CodingLanguage }</h1>
+      </header>
+
+      <section class="content">
+        <p>QUBIT is a math‑first, educational, and universal coding language. It is not related to quantum computing.</p>
+        <p>The name Q.U.B.I.T. stands for "Quantitative Universal Basis for Instructional Transformation", reflecting our mission to make mathematics and coding more intuitive, and to enable algorithms to be expressed with minimal effort.</p> 
+        <p>QUBIT Notation is the syntax of the language, designed around algebraic mathematics and instant calculation. QubitScript refers to runnable .qbit files written in QUBIT Notation, while QubitLang denotes the official brand name of the QUBIT language and its ecosystem.</p>
+        <p>QubitLang bridges high-level mathematical abstraction and low-level executable precision.</p>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <h2>Why QUBIT</h2>
+          <ul class="bullets">
+            <li>Math‑first design: Preserve familiar mathematical forms while making them executable.</li>
+            <li>Instant calculation: Turn formulas into immediate, actionable computation.</li>
+            <li>Readable yet precise: Human-centric syntax that is as easy to read as plain English or mathematical notation, with machine‑level clarity.</li>
+            <li>Intuitive & universal: Based on fundamental mathematical concepts, with a gentle learning curve from high-level abstraction to low-level control.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>QUBIT Notation</h2>
+<pre><code><span class="cm">// Compute a simple series</span>
+
+n <span class="op">=</span> <span class="num">10</span><span class="op">;</span> sum <span class="op">=</span> <span class="num">0</span>
+
+<span class="kw">For</span> i <span class="kw">From</span> <span class="num">1</span> <span class="kw">To</span> n { sum <span class="op">+=</span> i<span class="op">^</span><span class="num">2</span> }
+
+<span class="kw">Print</span> <span class="str">"Sum of squares: </span><span class="op">\( </span>sum<span class="op"> )</span><span class="str">"</span>
+
+
+
+<span class="cm">// Tiny function</span>
+
+fib(n) <span class="op">=</span> <span class="kw">If</span> n <span class="op"><</span> <span class="num">2</span> <span class="kw">Then</span> n <span class="kw">Else</span> fib(n<span class="op">-</span><span class="num">1</span>) <span class="op">+</span> fib(n<span class="op">-</span><span class="num">2</span>)
+
+<span class="kw">Print</span> <span class="str">"fib(8): </span><span class="op">\( </span>fib(<span class="num">8</span>)<span class="op"> )</span><span class="str">"</span>
+
+</code></pre>
+        </div>
+      </section>
+      <section class="content">
+        <p class="status"><em>
+          Project status: long-term conceptual design, ongoing specification consolidation, and active implementation development.
+        </em></p>
+      </section>
+
+      <div class="cta">
+        <a class="btn" href="https://qubitlang-hq.github.io/" target="_blank" rel="noopener">View on GitHub</a>
+        <a class="btn secondary disabled" title="Documentation is currently being refined." href="https://gitlab.com/qubitlang-hq/qubitlang-hq.gitlab.io/-/blob/main/docs/SPECIFICATION.md" target="_blank" rel="noopener">Docs (Refining)</a>
+      </div>
+    </div>
+
+    <footer>
+      © 2025-2026 QubitLang. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
