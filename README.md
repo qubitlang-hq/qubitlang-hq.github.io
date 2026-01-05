@@ -1,10 +1,15 @@
 # qubitlang-hq.github.io
 
 QUBIT - The Coding Language
+
 **Q**uantitative **U**niversal **B**asis for **I**nstructional **T**ransformation
 
 QUBIT is a math-first, educational, and universal coding language.
 It is designed to make mathematics directly executable and algorithms effortlessly expressible.
+
+- **Syntax:** QUBIT Notation
+- **File Extension:** `.qbit` (QubitScript)
+- **Official Site:** [qubitlang.com](https://qubitlang.com)
 
 
 ## Project Status
